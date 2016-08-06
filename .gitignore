@@ -1,0 +1,16 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+*.pyc
+*~
+*.swo
+*.swp
+*.swn
+*.sw*
+*.orig
+/silour/settings*.py
+local_settings.py
+__pycache__/
+db.sqlite3
+/media/
