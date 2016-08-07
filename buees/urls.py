@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from backend.viewsets import *
+from django.conf.urls.static import static
+from django.conf import settings
 from rest_framework import routers
+from backend.viewsets import *
+
 
 
 admin.autodiscover()
@@ -29,4 +32,4 @@ router.register(r'BusSchedule', BusScheduleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
