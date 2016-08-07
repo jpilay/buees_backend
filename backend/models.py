@@ -72,8 +72,8 @@ class BusRoute(models.Model):
 
 
 class BusPosition(models.Model):
-    bus_plate = models.ForignKey(BusPlate,relate_name='BusPosition',blank=False)
-    bus_route = models.ForeignKey(BusRoute,relate_name='BusPosition',blank=False)
+    bus_plate = models.ForignKey(BusPlate,related_name='BusPosition',blank=False)
+    bus_route = models.ForeignKey(BusRoute,related_name='BusPosition',blank=False)
     longitude = models.FloatField(blank=False)
     latitude = models.FloatField(blank=False)
     date = models.DateTimeField(auto_now_add=True)

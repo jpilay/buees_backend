@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+admin.site.register(BusPlate)
+admin.site.register(BusRoute)
+admin.site.register(BusPosition)
+admin.site.register(BusSchedule)
