@@ -15,6 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from backend.viewsets import *
+from rest_framework import routers
+
+
+admin.autodiscover()
+
+router = routers.DefaultRouter()
+router.register(r'BusPlate', BusPlateViewSet)
+router.register(r'BusRoute', BusRouteViewSet)
+router.register(r'BusPosition', BusPositionViewSet)
+router.register(r'BusSchedule', BusScheduleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
