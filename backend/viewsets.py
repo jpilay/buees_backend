@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from models import *
-from backend.serializers import *
+from .models import *
+from .serializers import *
 
 class BusPlateViewSet(viewsets.ModelViewSet):
     queryset = BusPlate.objects.all()
