@@ -79,10 +79,10 @@ class BusPosition(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.plate_bus.name + ' - ' + self.bus_route.name
+        return self.bus_plate.name + ' - ' + self.bus_route.name
 
     def __unicode__(self):
-        return unicode(self.plate_bus.name + ' - ' + self.bus_route.name)
+        return unicode(self.bus_plate.name + ' - ' + self.bus_route.name)
 
     class Meta:
         db_table = 'bus_position'
