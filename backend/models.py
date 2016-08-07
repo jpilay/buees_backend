@@ -96,6 +96,7 @@ class BusSchedule(models.Model):
     class Meta:
         db_table = 'bus_schedule'
         verbose_name = 'Horario de Buses'
+        verbose_name_plural = 'Horario de Buses'
 
 
 '''
