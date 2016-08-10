@@ -19,17 +19,19 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
 from backend.viewsets import *
-
+from backend.views import *
 
 
 admin.autodiscover()
-
 router = routers.DefaultRouter()
 router.register(r'BusPlate', BusPlateViewSet)
 router.register(r'BusRoute', BusRouteViewSet)
-router.register(r'BusPosition', BusPositionViewSet)
+router.register(r'BusLocation', BusLocationViewSet)
 router.register(r'BusSchedule', BusScheduleViewSet)
 
 urlpatterns = [
+    url(r'^$', index, name='home'),
     url(r'^admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^bus_location/', bus_location, name='bus_location'),
+    url(r'^points/', points, name='points'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
