@@ -1,0 +1,93 @@
+[
+              {
+                 "stop":"Base",
+                 "dir":"Vía Puntilla Samborondón, Campus UEES, puerta 7",
+                 "lat":"-2.132836",
+                 "lng":"-79.866469",
+                 "h1":"8:40"
+              },
+              {
+                 "stop":"Parada 1",
+                 "dir":"Av. Luis Plaza Dañin (Cdla. FAE), exterior Iglesia de los Mormones",
+                 "lat":"-2.170857",
+                 "lng":"-79.885452",
+                 "h1":"9:03"
+              },
+              {
+                 "stop":"Parada 2",
+                 "dir":"Av. Luis Plaza Dañin, exterior de Almacén Andrés Borbor",
+                 "lat":"-2.171145",
+                 "lng":"-79.893569",
+                 "h1":"9:08"
+              },
+              {
+                 "stop":"Parada 3",
+                 "dir":"Av. Luis Plaza Dañin, exterior del Hogar San José",
+                 "lat":"-2.171179",
+                 "lng":"-79.896684",
+                 "h1":"9:09"
+              },
+              {
+                 "stop":"Parada 4",
+                 "dir":"Av. Francisco de Orellana, exterior de Restaurante Gran Chef",
+                 "lat":"-2.169111",
+                 "lng":"-79.897201",
+                 "h1":"9:10"
+              },
+              {
+                 "stop":"Parada 5",
+                 "dir":"Av. Francisco de Orellana, exterior del Edificio CLARO",
+                 "lat":"-2.164717",
+                 "lng":"-79.896068",
+                 "h1":"9:11"
+              },
+              {
+                 "stop":"Parada 6",
+                 "dir":"Av. Francisco de Orellana, exterior de EXPOPLAZA",
+                 "lat":"-2.160472",
+                 "lng":"-79.898690",
+                 "h1":"9:13"
+              },
+              {
+                 "stop":"Parada 7",
+                 "dir":"Av. Guillermo Pareja, exterior de Restaurante Cantonés",
+                 "lat":"-2.150435",
+                 "lng":"-79.892605",
+                 "h1":"9:18"
+              },
+              {
+                 "stop":"Parada 8",
+                 "dir":"Av. Guillermo Pareja, exterior de la Hyundai",
+                 "lat":"-2.146980",
+                 "lng":"-79.893321",
+                 "h1":"9:19"
+              },
+              {
+                 "stop":"Parada 9",
+                 "dir":"Av. Rodolfo Baquerizo Nazur (Alborada),frente a Plaza Mayor",
+                 "lat":"-2.140368",
+                 "lng":"-79.897681",
+                 "h1":"9:21"
+              },
+              {
+                 "stop":"Parada 10",
+                 "dir":"Av. Rodolfo Baquerizo Nazur, exterior Compraventa de joyas",
+                 "lat":"-2.137487",
+                 "lng":"-79.899670",
+                 "h1":"9:22"
+              },
+              {
+                 "stop":"Parada 11",
+                 "dir":"Av. Benjamín Carrión, exterior Ferretería Espinoza",
+                 "lat":"-2.136959",
+                 "lng":"-79.904099",
+                 "h1":"9:25"
+              },
+              {
+                 "stop":"Base",
+                 "dir":"Av. Rodolfo Baquerizo Nazur (Base: Alborada - Fybeca)",
+                 "lat":"-2.133794",
+                 "lng":"-79.903056",
+                 "h1":"9:27"
+              }
+]

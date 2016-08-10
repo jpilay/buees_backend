@@ -1,0 +1,79 @@
+[             
+              {
+                 "stop":"Base",
+                 "dir":"Av. Rodolfo Baquerizo Nazur (Base: Alborada - Farmacia Fybeca)",
+                 "lat":"-2.133794",
+                 "lng":"-79.903056",
+                 "h1":"7:40"
+              },
+              {
+                 "stop":"Parada 1",
+                 "dir":"Av. Rodolfo Baquerizo Nazur, exterior de Mi Comisariato",
+                 "lat":"-2.141517",
+                 "lng":"-79.897190",
+                 "h1":"7:43"
+              },
+              {
+                 "stop":"Parada 2",
+                 "dir":"Av. Guillermo Pareja (Garzota), exterior Restaurante Marcelo (Induato)",
+                 "lat":"-2.148004",
+                 "lng":"-79.893046",
+                 "h1":"7:45"
+              },
+              {
+                 "stop":"Parada 3",
+                 "dir":"Av. Guillermo Pareja (Garzota), exterior Despensa Alexandra",
+                 "lat":"-2.151424",
+                 "lng":"-79.893448",
+                 "h1":"7:47"
+              },
+              {
+                 "stop":"Parada 4",
+                 "dir":"Av. Francisco de Orellana, diagonal a Colineal",
+                 "lat":"-2.160058",
+                 "lng":"-79.899031",
+                 "h1":"7:51"
+              },
+              {
+                 "stop":"Parada 5",
+                 "dir":"Av. Francisco de Orellana, exterior Ciudadela Las Garzas",
+                 "lat":"-2.168242",
+                 "lng":"-79.896983",
+                 "h1":"7:55"
+              },
+              {
+                 "stop":"Parada 6",
+                 "dir":"Av. Plaza Dañin, exterior Cangrejal Manny`s",
+                 "lat":"-2.171387",
+                 "lng":"-79.896228",
+                 "h1":"7:57"
+              },
+              {
+                 "stop":"Parada 7",
+                 "dir":"Av. Plaza Dañin (Cdla. Atarazana), frente Iglesia de los Mormones",
+                 "lat":"-2.170998",
+                 "lng":"-79.885534",
+                 "h1":"7:59"
+              },
+              {
+                 "stop":"Parada 8",
+                 "dir":"Vía Puntilla Samborondon, exterior Cdla. Río Grande",
+                 "lat":"-2.147996",
+                 "lng":"-79.864366",
+                 "h1":"8:06"
+              },
+              {
+                 "stop":"Parada 9",
+                 "dir":"Vía Puntilla Samborondon, exterior de Tire City (MacDonalds)",
+                 "lat":"-2.144180",
+                 "lng":"-79.863681",
+                 "h1":"8:07"
+              },
+              {
+                 "stop":"Base",
+                 "dir":"Vía Puntilla Samborondón, Campus UEES, Puerta 7.",
+                 "lat":"-2.132836",
+                 "lng":"-79.866469",
+                 "h1":"8:13"
+              }
+] 

@@ -1,0 +1,66 @@
+[
+              {
+                 "stop":"Base",
+                 "dir":"Calle El Oro y Av. Quito (Centro Cívico)",
+                 "lat":"-2.212622",
+                 "lng":"-79.897053",
+                 "h1":"6:15",
+                 "h2":"17:00"
+              },
+              {
+                 "stop":"Parada 1",
+                 "dir":"Av. Quito y Gómez Rendón (Hospital del niño)",
+                 "lat":"-2.203145",
+                 "lng":"-79.893334",
+                 "h1":"6:19",
+                 "h2":"17:05"
+              },
+              {
+                 "stop":"Parada 2",
+                 "dir":"Av. Quito y 1º de Mayo",
+                 "lat":"-2.189063",
+                 "lng":"-79.889041",
+                 "h1":"6:23",
+                 "h2":"17:15"
+              },
+              {
+                 "stop":"Parada 3",
+                 "dir":"Av. Quito hasta Av. Pedro Menéndez G. (Cementerio Puerta 11)",
+                 "lat":"-2.180257",
+                 "lng":"-79.888076",
+                 "h1":"6:26",
+                 "h2":"17:18"
+              },
+              {
+                 "stop":"Parada 4",
+                 "dir":"Av. Pedro Menéndez G. exterior de Cdla. Río Guayas",
+                 "lat":"-2.164091",
+                 "lng":"-79.879959",
+                 "h1":"6:29",
+                 "h2":"17:21"
+              },
+              {
+                 "stop":"Parada 5",
+                 "dir":"Puente Carlos Pérez, vía Puntilla Samborondón exterior Cdla. Río Grande",
+                 "lat":"-2.147996",
+                 "lng":"-79.864366",
+                 "h1":"6:33",
+                 "h2":"17:25"
+              },
+              {
+                 "stop":"Parada 6",
+                 "dir":"Vía Puntilla Samborondón, exterior de Tire City (Mc Donald's)",
+                 "lat":"-2.144180",
+                 "lng":"-79.863681",
+                 "h1":"6:35",
+                 "h2":"17:26"
+              },
+              {
+                 "stop":"Base",
+                 "dir":"Vía Puntilla Samborondón, Campus UEES, puerta 7",
+                 "lat":"-2.132836",
+                 "lng":"-79.866469",
+                 "h1":"6:41",
+                 "h2":"17:32"
+              }
+]

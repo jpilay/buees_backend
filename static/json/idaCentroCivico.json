@@ -1,0 +1,93 @@
+[
+              {
+                 "stop":"Base",
+                 "dir":"Vía Puntilla Samborondón, Campus UEES, puerta 7",
+                 "lat":"-2.132836",
+                 "lng":"-79.866469",
+                 "h1":"21:15"
+              },
+              {
+                 "stop":"Parada 1",
+                 "dir":"Vía Puntilla Samborondón, exterior de Riocentro",
+                 "lat":"-2.142329",
+                 "lng":"-79.863867",
+                 "h1":"21:20"
+              },
+              {
+                 "stop":"Parada 2",
+                 "dir":"Vía Puntilla Samborondón, exterior de la Iglesia Sta. Teresita",
+                 "lat":"-2.144955",
+                 "lng":"-79.864040",
+                 "h1":"21:21"
+              },
+              {
+                 "stop":"Parada 3",
+                 "dir":"Vía Puntilla Samborondón, frente Pan Dorado",
+                 "lat":"-2.148754",
+                 "lng":"-79.864682",
+                 "h1":"21:22"
+              },
+              {
+                 "stop":"Parada 4",
+                 "dir":"Av. Pedro Menéndez Gilbert, parada Metrovía Liceo Naval",
+                 "lat":"-2.161785",
+                 "lng":"-79.880415",
+                 "h1":"21:26"
+              },
+              {
+                 "stop":"Parada 5",
+                 "dir":"Av. Pedro Menéndez Gilbert, exterior Base Aérea FAE",
+                 "lat":"-2.166040",
+                 "lng":"-79.880200",
+                 "h1":"21:27"
+              },
+              {
+                 "stop":"Parada 6",
+                 "dir":"Av. Pedro Menéndez Gilbert, frente al Hospital Lorenzo Ponce",
+                 "lat":"-2.179811",
+                 "lng":"-79.887333",
+                 "h1":"21:30"
+              },
+              {
+                 "stop":"Parada 7",
+                 "dir":"Av. Pedro Menéndez Gilbert, Cdla. Alamos frente al Cementerio puerta 10",
+                 "lat":"-2.179361",
+                 "lng":"-79.886360",
+                 "h1":"21:31"
+              },
+              {
+                 "stop":"Parada 8",
+                 "dir":"Av. Machala y Av. 9 de Octubre",
+                 "lat":"-2.188932",
+                 "lng":"-79.889819",
+                 "h1":"21:33"
+              },
+              {
+                 "stop":"Parada 9",
+                 "dir":"Av. Machala y Calle Aguirre",
+                 "lat":"-2.191711",
+                 "lng":"-79.890751",
+                 "h1":"21:35"
+              },
+              {
+                 "stop":"Parada 10",
+                 "dir":"Av. Machala y Calle Cuenca",
+                 "lat":"-2.200889",
+                 "lng":"-79.893645",
+                 "h1":"21:37"
+              },
+              {
+                 "stop":"Parada 11",
+                 "dir":"Calle José de Antepara y Calle Argentina",
+                 "lat":"-2.205910",
+                 "lng":"-79.895975",
+                 "h1":"21:38"
+              },
+              {
+                 "stop":"Base",
+                 "dir":"Calle El Oro y Av. Quito (Centro Cívico)",
+                 "lat":"-2.212622",
+                 "lng":"-79.897053",
+                 "h1":"21:39"
+              }
+]
