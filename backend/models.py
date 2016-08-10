@@ -71,9 +71,9 @@ class BusRoute(models.Model):
         verbose_name_plural = 'Rutas Buses'
 
 
-class BusPosition(models.Model):
-    bus_plate = models.ForeignKey(BusPlate,related_name='BusPosition',blank=False)
-    bus_route = models.ForeignKey(BusRoute,related_name='BusPosition',blank=False)
+class BusLocation(models.Model):
+    bus_plate = models.ForeignKey(BusPlate,related_name='BusLocation',blank=False)
+    bus_route = models.ForeignKey(BusRoute,related_name='BusLocation',blank=False)
     longitude = models.FloatField(blank=False)
     latitude = models.FloatField(blank=False)
     date = models.DateTimeField(auto_now_add=True)
@@ -85,9 +85,9 @@ class BusPosition(models.Model):
         return unicode(self.bus_plate.name + ' - ' + self.bus_route.name)
 
     class Meta:
-        db_table = 'bus_position'
-        verbose_name = 'Posición de Bus'
-        verbose_name_plural = 'Posiciones de Buses'
+        db_table = 'bus_location'
+        verbose_name = 'Ubicación de Bus'
+        verbose_name_plural = 'Ubicaciones de Buses'
 
 
 class BusSchedule(models.Model):
