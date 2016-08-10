@@ -14,9 +14,9 @@ class BusRouteSerializer(serializers.ModelSerializer):
         fields = ('name','date')
 
 
-class BusPositionSerializer(serializers.ModelSerializer):
+class BusLocationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BusPosition
+        model = BusLocation
         fields = ('bus_plate', 'bus_route', 'longitude','latitude','date')
 
 
