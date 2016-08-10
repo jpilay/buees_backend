@@ -12,9 +12,9 @@ class BusRouteViewSet(viewsets.ModelViewSet):
     serializer_class = BusRouteSerializer
 
 
-class BusPositionViewSet(viewsets.ModelViewSet):
-    queryset = BusPosition.objects.all()
-    serializer_class = BusPositionSerializer
+class BusLocationViewSet(viewsets.ModelViewSet):
+    queryset = BusLocation.objects.all()
+    serializer_class = BusLocationSerializer
 
 
 class BusScheduleViewSet(viewsets.ModelViewSet):
