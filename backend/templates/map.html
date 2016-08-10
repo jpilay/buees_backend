@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html" />
+<meta http-equiv="Pragma" content="no-cache" />
+
+<!-- Title -->
+<title>..::VISOR BUSES UEES::..</title>
+
+<!-- CSS -->
+<!-- Custom CSS -->
+<link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen">
+<!-- Bootstrap Core CSS -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+
+<!-- JavaScripts -->
+<!-- JQuery Core JavaScript -->
+<script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Google Maps Core JavaScript -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<!-- Custom JavaScript -->
+<script>
+
+  var markers = [];
+  var bus_stops = [];
+  var results = [];
+  var route_selected = "";
+  var map;
+
+  // Remove all markers on the map
+  function removeMarkers(points) {
+    for (var i in points) {
+        points[i].setMap(null);
+    }
+    points = []
+  }
+
+  // Modal of routes
+  function chooseRoute(){
+    var count = 0;
+    var options = "";
+
+    $('#modal_search')
+      .modal({
+        backdrop: 'static',
+        keyboard: true
+    });
+
+    $("#select_result")
+      .click(function(){
+        route_selected = $('input[name="options"]:checked').val();
+        if (route_selected){
+          $("#modal_search").modal('hide');
+ 	        markerBus();
+ 	        intervalStart();
+        }
+    });
+
+    {% for r in routes %}
+        options = '<input type="radio" name="options" id="options" value="{{r.name}}"/>{{r.name}}<br/>'
+        $('#result_search').append(options);
+        count++;
+    {% endfor %}
+
+    $('#modal_search').modal('show');
+  }
+
+  //Marking my location on the map
+  function markerLocation(position) {
+
+    var latCurrent = position.coords.latitude;
+    var lonCurrent = position.coords.longitude;
+    var location = new google.maps.LatLng(latCurrent, lonCurrent);
+    var mapOptions = {
+      center: new google.maps.LatLng(latCurrent,lonCurrent),
+      zoom: 13
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var marker = new google.maps.Marker({
+      map: map,
+      position: location,
+      title: "This is your location",
+      icon: "{% static 'img/mi_ubicacion.png' %}",
+      animation: google.maps.Animation.DROP
+    });
+  }
+
+  // Show error getting location
+  function showError() {
+    alert("Conexión GPS desactivada!");
+  }
+
+  // Getting location
+  function myLocation(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(markerLocation, showError);
+    }else {
+      alert("El navegador no soporta Geolocalización.");
+    }
+  }
+
+  // Marking Bus Stops on the map
+  function markerBusStops(route){
+    var tmp = route_selected.replace(/ /g,'');
+    var img = "{% static 'img/stop' %}"
+    var url = "{% static 'json/' %}";
+
+    $.getJSON(url + route + tmp + '.json',
+      function(dataBusStops) {
+        quantityBusStops = dataBusStops.length;
+        for (var i = 0; i < quantityBusStops; i++) {
+          var stop = dataBusStops[i].stop;
+          var longitude = dataBusStops[i].lng;
+          var latitude = dataBusStops[i].lat;
+          var address = dataBusStops[i].dir;
+          var hour = dataBusStops[i].hour;
+          var currentLocation = new google.maps.LatLng(latitude, longitude);
+          var title = stop + ': ' + address + '<br>' + 'Ruta: ' + route_selected;
+          var marker = new google.maps.Marker({
+            position: currentLocation,
+            map: map,
+            icon: img + tmp + '.png',
+            animation: google.maps.Animation.DROP
+          });
+          var infoWindow = new google.maps.InfoWindow({
+            content: title,
+            maxWidth: 1000,
+            maxHeight: 1000
+          });
+          marker.addListener('click', function(){
+            infoWindow.open(map,marker);
+          });
+          bus_stops.push(marker);
+        }
+    });
+  }
+
+  // Marking Bus on the map
+  function markerBus(){
+    var tmp = []
+    removeMarkers(markers);
+
+    $.getJSON("/bus_location/?bus_route=" + route_selected,
+      function(result){
+        if (!$.isEmptyObject(result)){
+  	      var plate = result.plate;
+          var longitude = result.longitude;
+          var latitude = result.latitude;
+          var route = result.route;
+          var currentLocation = new google.maps.LatLng(latitude, longitude);
+          var img = "{% static 'img/buees' %}" + route.replace(/ /g,'') + ".png";
+          var marker = new google.maps.Marker({
+              position: currentLocation,
+              map: map,
+              icon: img,
+              title: plate
+          });
+          markers.push(marker);
+        }
+    });
+  }
+
+  function intervalStart() {
+    setInterval(markerBus, 3000);
+  }
+
+  function initialize() {
+    var mapOptions = {
+        center: new google.maps.LatLng("-2.181265", "-79.867201"),
+        zoom: 13
+    };
+
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+    myLocation();
+    chooseRoute();
+  }
+
+  // Marking way stops
+  function wayStops() {
+      removeMarkers(bus_stops);
+      markerBusStops('ida');
+  }
+
+  // Marking return stops
+  function returnStops() {
+      removeMarkers(bus_stops);
+      markerBusStops('regreso');
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+  $(document).ready(function(){});
+
+
+</script>
+</head>
+
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div>
+        <img id="logo" class="img-thumbnail" width="80px" style="float: left;" src="{% static 'img/uees.png' %}" alt="uees">
+        <div style="color: white; font-size:15px; padding:10px 5px 5px 10px;">
+          <span style="padding-left:10px;">VISOR DE BUSES EN TIEMPO REAL</span>
+        </div>
+        <button id="ida" type='button' style="left:100;background-color:#3B0E15; color:white;top: 44px; font-size: 10px;" class='btn_ida btn-lg' onclick="wayStops()">Paradas Ida</button>
+        <button id="retorno" type='button' style="float: left;background-color:#3B0E15; color:white;top: 50px;font-size: 10px;" class='btn_retorno btn-lg' onclick="returnStops()">Paradas Retorno</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="map_canvas" style=" width: 100%;top: 70px;"></div>
+
+  <div class="modal fade" id="modal_search">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style = "background:black;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Rutas Disponibles</h4>
+        </div>
+        <div class="modal-body-center">
+          <div id="result_search" style="margin-left:50px;margin-right:30px;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="select_result" class="btn btn-primary">Aceptar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+</body>
+</html>
