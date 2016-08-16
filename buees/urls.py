@@ -33,5 +33,5 @@ urlpatterns = [
     url(r'^$', index, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^bus_location/', bus_location, name='bus_location'),
-    url(r'^points/', points, name='points'),
+    url(r'^signin/', signin, name='signin'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
