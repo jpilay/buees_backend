@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import authenticate
 from .models import *
 import json
 
@@ -30,13 +33,34 @@ def bus_location(request):
     return HttpResponse(json.dumps(response))
 
 
-def welcome_email(username):
-    body = '<table align="center"><thead><tr><td style="background-color:#eeeeee;padding:20px"><img  style="width: 164px; height: 42px;"  alt="icono"  src="http://159.203.99.117:9999/media/silour/logosilour.png"></td></tr></thead><tbody><tr><td  style="padding:20px"><div>Hola ' + username + '!<br><br>Hemos asegurado que tenemos correctamente tu correo electr&oacute;nico.<br><span  style="font-weight: bold;">Ahora podras acceder a la aplicaci&iacute;n y disfrutar de todas las opciones que tiene para t&iacute;.</div><br><br/>Gracias,<br>El equipo Buees</div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
+def recovery_password_email(username,password):
+    body = '<table align="center"><thead><tr><td style="background-color:#eeeeee;padding:20px"><img style="width: 164px; height: 42px;"  alt="icono"  src="http://159.203.99.117:9999/media/silour/logosilour.png"></td></tr></thead><tbody><tr><td style="padding:20px"><div  style="text-align: left;"><br>Hola ' + username + '!<br><br>Has solicitado restablecer la contrase&ntilde;a de tu cuenta de Buees,<br><br><span style="font-weight: bold;">Contrase&ntilde;a: </span>' + password + '<br><br>En caso que desees cambiar la contrase&ntilde;a, puedes ir al bot&oacute;n de cambiar contrase&ntilde;a que <br>se encuentra en la opci&oacute;n de registrar.<br><br><br>Gracias,<br>El equipo de Buues<br><br></div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
 
     return body
 
+@csrf_exempt
+def signin(request):
 
-def recovery_password_email(username,password):
-    body = '<table align="center"><thead><tr><td style="background-color:#eeeeee;padding:20px"><img style="width: 164px; height: 42px;"  alt="icono"  src="http://159.203.99.117:9999/media/silour/logosilour.png"></td></tr></thead><tbody><tr><td style="padding:20px"><div  style="text-align: left;"><br>Hola ' + username + '!<br><br>Has solicitado restablecer la contrase&ntilde;a de tu cuenta de Buees,<br><br><span style="font-weight: bold;">Contrase&ntilde;a: </span>' + password + '<br><br>En caso que desees cambiar la contrase&ntilde;a, puedes ir al bot&oacute;n de cambiar contrase&ntilde;a que <br>se encuentra en la opci&oacute;n de registrar.<br><br><br>Gracias,<br>El equipo de Buues<br><br></div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
+    username = request.POST.get('username', None)
+    password = request.POST.get('password', None)
+
+    if username and password:
+        context = {}
+        user = authenticate(username=username, password=password)
+
+        if user:
+            group = Group.objects.filter(user=user)
+
+            if group:
+                group = group.first()
+                context = {'username':user.username, 'email':user.email, 'group':group.name}
+
+        return JsonResponse(context)
+    else:
+        return HttpResponseBadRequest('Error en parametros')
+
+
+def welcome_email(username):
+    body = '<table align="center"><thead><tr><td style="background-color:#eeeeee;padding:20px"><img  style="width: 164px; height: 42px;"  alt="icono"  src="http://159.203.99.117:9999/media/silour/logosilour.png"></td></tr></thead><tbody><tr><td  style="padding:20px"><div>Hola ' + username + '!<br><br>Hemos asegurado que tenemos correctamente tu correo electr&oacute;nico.<br><span  style="font-weight: bold;">Ahora podras acceder a la aplicaci&iacute;n y disfrutar de todas las opciones que tiene para t&iacute;.</div><br><br/>Gracias,<br>El equipo Buees</div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
 
     return body
