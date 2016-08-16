@@ -30,14 +30,8 @@ def bus_location(request):
     return HttpResponse(json.dumps(response))
 
 
-def points(request):
+def welcome_email(username):
+    body = '<table align="center"><thead><tr><td style="background-color:#eeeeee;padding:20px"><img  style="width: 164px; height: 42px;"  alt="icono"  src="http://159.203.99.117:9999/media/silour/logosilour.png"></td></tr></thead><tbody><tr><td  style="padding:20px"><div>Hola ' + username + '!<br><br>Hemos asegurado que tenemos correctamente tu correo electr&oacute;nico.<br><span  style="font-weight: bold;">Ahora podras acceder a la aplicaci&iacute;n y disfrutar de todas las opciones que tiene para t&iacute;.</div><br><br/>Gracias,<br>El equipo Buees</div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
 
-    try:
-      stop_name = request.GET['stop_name'].strip()
-      print(stop_name)
-    except:
-        return HttpResponseBadRequest('Error en parametros')
+    return body
 
-    data = json.loads('json/' + stop_name)
-    return HttpResponse(data, mimetype='application/json', )
-    #return HttpResponse(json.dumps('json/' + stop_name))
