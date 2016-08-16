@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'push_notifications',
     'backend',
 ]
 
@@ -71,6 +72,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'buees.wsgi.application'
+
+# Push Notifications
+PUSH_NOTIFICATIONS_SETTINGS = {
+   'GCM_API_KEY': '',
+}
+
+
+# SMTP Credentials
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bueesproyecto@gmail.com'
+EMAIL_HOST_PASSWORD = 'buees2015'
 
 
 # Database
