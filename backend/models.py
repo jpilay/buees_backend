@@ -97,30 +97,3 @@ class BusSchedule(models.Model):
         db_table = 'bus_schedule'
         verbose_name = 'Horario de Buses'
         verbose_name_plural = 'Horario de Buses'
-
-
-'''
-def send_email(modeloAsunto,usuario,clave,recipient):
-
-    # Setup email
-
-    sender = 'bueesproyecto@gmail.com'
-    subject = modeloAsunto
-    body = '<br><br>Usuario: ' + usuario + '<br>Clave: ' + clave
-    headers = ["From: " + sender,
-               "Subject: " + subject,
-               "To: " + recipient,
-               "MIME-Version: 1.0",
-               "Content-Type: text/html"]
-    headers = "\r\n".join(headers)
-
-    # SMTP credentials
-    password = 'buees2015'
-
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.login(sender, password)
-
-    # Send email
-    server.sendmail(sender, recipient, headers + "\r\n\r\n" + body)
-    server.quit()
-'''
