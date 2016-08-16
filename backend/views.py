@@ -35,3 +35,8 @@ def welcome_email(username):
 
     return body
 
+
+def recovery_password_email(username,password):
+    body = '<table align="center"><thead><tr><td style="background-color:#eeeeee;padding:20px"><img style="width: 164px; height: 42px;"  alt="icono"  src="http://159.203.99.117:9999/media/silour/logosilour.png"></td></tr></thead><tbody><tr><td style="padding:20px"><div  style="text-align: left;"><br>Hola ' + username + '!<br><br>Has solicitado restablecer la contrase&ntilde;a de tu cuenta de Buees,<br><br><span style="font-weight: bold;">Contrase&ntilde;a: </span>' + password + '<br><br>En caso que desees cambiar la contrase&ntilde;a, puedes ir al bot&oacute;n de cambiar contrase&ntilde;a que <br>se encuentra en la opci&oacute;n de registrar.<br><br><br>Gracias,<br>El equipo de Buues<br><br></div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
+
+    return body
