@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^$', index, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^bus_location/', bus_location, name='bus_location'),
+    url(r'^recovery_password/', recovery_password, name='recovery_password'),
     url(r'^signin/', signin, name='signin'),
     url(r'^signup/', signup, name='signup'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
