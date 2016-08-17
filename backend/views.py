@@ -33,6 +33,40 @@ def bus_location(request):
 
     return HttpResponse(json.dumps(response))
 
+
+# Change password of user
+@csrf_exempt
+def recovery_password(request):
+
+    username = request.POST.get('username', None)
+    new_password = request.POST.get('password', None)
+
+    if username and new_password:
+        context = {}
+        user = User.objects.filter(username=username)
+
+        if user:
+            user = user.first()
+            user.set_password(new_password)
+            user.save()
+            group = Group.objects.get(user=user)
+
+            from django.conf import settings
+            send_mail(
+                'Cambio de clave',
+                '',
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                html_message = recovery_password_email(user.username,new_password)
+                )
+
+            context = {'username':user.username, 'email':user.email, 'group':group.name}
+
+        return JsonResponse(context)
+    else:
+        return HttpResponseBadRequest('Error en parametros')
+
+
 # Email message for recovery password of user
 def recovery_password_email(username,password):
     body = '<table align="center"><thead><tr><td style="background-color:#ffffff;padding-left:20px"><img style="width: 164px; height: 42px;"  alt="icono"  src="http://www.uees.edu.ec/images/logo-uees.jpg"></td></tr></thead><tbody><tr><td style="padding:20px"><div  style="text-align: left;"><br>Hola ' + username + '!<br><br>Has solicitado restablecer la contrase&ntilde;a de tu cuenta de Buees,<br><br><span style="font-weight: bold;">Contrase&ntilde;a: </span>' + password + '<br><br>En caso que desees cambiar la contrase&ntilde;a, puedes ir al bot&oacute;n de cambiar contrase&ntilde;a que <br>se encuentra en la opci&oacute;n de registrar.<br><br><br>Gracias,<br>El equipo de Buues<br><br></div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
@@ -40,7 +74,7 @@ def recovery_password_email(username,password):
     return body
 
 
-#Sign in to application
+# Sign in to application
 @csrf_exempt
 def signin(request):
 
@@ -63,7 +97,7 @@ def signin(request):
         return HttpResponseBadRequest('Error en parametros')
 
 
-#Sign up to application
+# Sign up to application
 @csrf_exempt
 def signup(request):
     username = request.POST.get('username', None)
@@ -72,7 +106,7 @@ def signup(request):
     group_name = request.POST.get('group_name', None)
 
     if username and password and email:
-        #context = {}
+        context = {}
         user = authenticate(username=username, password=password)
         group = Group.objects.filter(name=group_name)
 
@@ -88,11 +122,10 @@ def signup(request):
                 '',
                 settings.EMAIL_HOST_USER,
                 [user.email],
-                html_message = welcome_email(user.username)
+                html_message = signup_email(user.username)
                 )
-            #context = {'username':user.username, 'email':user.email, 'group':group.name}
-            #return JsonResponse(context)
-            return HttpResponse()
+            context = {'username':user.username, 'email':user.email, 'group':group.name}
+            return JsonResponse(context)
 
         else:
             return HttpResponseBadRequest('Error en parametros')
@@ -102,7 +135,7 @@ def signup(request):
 
 
 # Email message for welcome of user
-def welcome_email(username):
+def signup_email(username):
     body = '<table align="center"><thead><tr><td style="background-color:#ffffff;padding-left:20px"><img  style="width: 164px; height: 42px;"  alt="icono"  src="http://www.uees.edu.ec/images/logo-uees.jpg"></td></tr></thead><tbody><tr><td  style="padding:20px"><div>Hola ' + username + '!<br><br>Hemos asegurado que tenemos correctamente tu correo electr&oacute;nico.<br><span  style="font-weight: bold;">Ahora podras acceder a la aplicaci&iacute;n y disfrutar de todas las opciones que tiene para t&iacute;.</div><br><br/>Gracias,<br>El equipo Buees</div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
 
     return body
