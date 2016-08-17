@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^bus_location/', bus_location, name='bus_location'),
     url(r'^signin/', signin, name='signin'),
+    url(r'^signup/', signup, name='signup'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
