@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'buees.wsgi.application'
 
 # Push Notifications
 PUSH_NOTIFICATIONS_SETTINGS = {
-   'GCM_API_KEY': '',
+   'GCM_API_KEY': 'AIzaSyD8pSQvFLk5TXx7-8nM7PXpM__hzN7RR_Y',
 }
 
 
