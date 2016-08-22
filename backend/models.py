@@ -1,49 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User, Group
 import smtplib
 import datetime
 
-'''
-class CaUsuario(models.Model):
-    usuario = models.CharField(max_length=45, blank=True,unique = True, primary_key=True)
-    clave = models.CharField(max_length=45, blank=True)
-    rol = models.CharField(max_length=45, blank=True)
-    correo = models.CharField(max_length=45, blank=True,unique = True)
-
-    def __init__(self, *args, **kwargs):
-        super(CaUsuario, self).__init__(*args, **kwargs)
-
-        try:
-          self.__original_clave = self.clave
-
-        except:
-          self.__original_clave = None
-
-
-    def save(self, *args, **kwargs):
-
-        correo = self.correo
-        #Envio de mail: Modificando la contrasena
-        if self.__original_clave != self.clave:
-            self.__original_clave = self.clave
-            #self.fecha = datetime.datetime.today()
-            modeloAsunto= "Cambio de Contrasena para BuessApp"
-            send_email(modeloAsunto,self.usuario,self.clave,correo)
-
-        else:
-            modeloAsunto="Clave para BuessApp"
-            send_email(modeloAsunto,self.usuario,self.clave,correo)
-
-        super(CaUsuario, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.usuario
-
-    def __unicode__(self):
-        return unicode(self.correo)
-
-    class Meta:
-        db_table = 'ca_usuario'
-'''
 
 class BusPlate(models.Model):
     name = models.CharField(max_length=45, blank=True)
@@ -97,3 +56,18 @@ class BusSchedule(models.Model):
         db_table = 'bus_schedule'
         verbose_name = 'Horario de Buses'
         verbose_name_plural = 'Horario de Buses'
+
+
+class DriverPublication(models.Model):
+    user_postman = models.ForeignKey(User, related_name='Publication', blank=True, null=True)
+    bus_route = models.ForeignKey(BusRoute,related_name='Publication',blank=False)
+    date = models.DateField(blank=False)
+    description = models.TextField(blank=False)
+    hour = models.TimeField(blank=False)
+    image = models.ImageField(upload_to='Publications')
+    status = models.BooleanField(default=False,blank=False)
+
+    class Meta:
+        db_table = 'driver_publication'
+        verbose_name = 'Publicación de Conductor'
+        verbose_name_plural = 'Publicaciones de Conductores'
