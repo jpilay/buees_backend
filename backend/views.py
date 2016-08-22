@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
+from push_notifications.models import GCMDevice
 from .models import *
 import json
 
@@ -33,16 +34,40 @@ def bus_location(request):
 
     return HttpResponse(json.dumps(response))
 
+# Save information device for Notification Push
+@csrf_exempt
+def register_device(request):
+
+    response = {}
+    username = request.POST.get('username',None)
+    name = request.POST.get('name',None)
+    device_id = request.POST.get('device_id',None)
+    registration_id = request.POST.get('registration_id',None)
+
+    if user_id and name and device_id and registration_id:
+        gcm_device = GCMDevice.objects.filter(device_id=device_id)
+
+        if gcm_device:
+            gcm_device = gcm_device.firts()
+
+        else:
+            user = User.objects.get(username=username)
+            gcm_device = GCMDevice.objects.create(user=user,name=name,device_id=device_id,registration_id=registration_id)
+            gcm_device.save()
+
+        response = {'id':gcm_device.id,}
+
+    return JsonResponde(response)
+
 
 # Change password of user
 @csrf_exempt
 def recovery_password(request):
-
+    response = {}
     username = request.POST.get('username', None)
     new_password = request.POST.get('password', None)
 
     if username and new_password:
-        context = {}
         user = User.objects.filter(username=username)
 
         if user:
@@ -52,19 +77,20 @@ def recovery_password(request):
             group = Group.objects.get(user=user)
 
             from django.conf import settings
-            send_mail(
-                'Cambio de clave',
-                '',
-                settings.EMAIL_HOST_USER,
-                [user.email],
-                html_message = recovery_password_email(user.username,new_password)
-                )
+            try:
+                send_mail(
+                    'Cambio de clave',
+                    '',
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    html_message = recovery_password_email(user.username,new_password)
+                    )
+            except:
+                print(user.username + ': Don\'t send recovery password email!')
 
-            context = {'username':user.username, 'email':user.email, 'group':group.name}
+            response = {'username':user.username, 'email':user.email, 'group':group.name}
 
-        return JsonResponse(context)
-    else:
-        return HttpResponseBadRequest('Error en parametros')
+    return JsonResponse(context)
 
 
 # Email message for recovery password of user
@@ -77,12 +103,11 @@ def recovery_password_email(username,password):
 # Sign in to application
 @csrf_exempt
 def signin(request):
-
+    response = {}
     username = request.POST.get('username', None)
     password = request.POST.get('password', None)
 
     if username and password:
-        context = {}
         user = authenticate(username=username, password=password)
 
         if user:
@@ -90,48 +115,45 @@ def signin(request):
 
             if group:
                 group = group.first()
-                context = {'username':user.username, 'email':user.email, 'group':group.name}
+                response = {'username':user.username, 'email':user.email, 'group':group.name}
 
-        return JsonResponse(context)
-    else:
-        return HttpResponseBadRequest('Error en parametros')
+    return JsonResponse(response)
 
 
 # Sign up to application
 @csrf_exempt
 def signup(request):
+    response = {}
     username = request.POST.get('username', None)
     password = request.POST.get('password', None)
     email = request.POST.get('email', None)
     group_name = request.POST.get('group_name', None)
 
     if username and password and email:
-        context = {}
-        user = authenticate(username=username, password=password)
+        user = User.objects.filter(username=username)
         group = Group.objects.filter(name=group_name)
 
-        if user is None and group is not None:
+        if not user and group:
             user = User.objects.create_user(username,email,password)
             group = group.first()
             user.groups.add(group)
             user.save()
 
             from django.conf import settings
-            send_mail(
-                'Bienvenido(a)!',
-                '',
-                settings.EMAIL_HOST_USER,
-                [user.email],
-                html_message = signup_email(user.username)
-                )
-            context = {'username':user.username, 'email':user.email, 'group':group.name}
-            return JsonResponse(context)
+            try:
+                send_mail(
+                    'Bienvenido(a)!',
+                    '',
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    html_message = signup_email(user.username)
+                    )
+            except:
+                print(user.username + ': Don\'t send welcome email!')
 
-        else:
-            return HttpResponseBadRequest('Error en parametros')
+            response = {'username':user.username, 'email':user.email, 'group':group.name}
 
-    else:
-        return HttpResponseBadRequest('Error en parametros')
+    return JsonResponse(response)
 
 
 # Email message for welcome of user
