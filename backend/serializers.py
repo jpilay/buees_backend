@@ -24,3 +24,9 @@ class BusScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusSchedule
         fields = ('image',)
+
+
+class UserGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('name',)

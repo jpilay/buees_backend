@@ -20,3 +20,8 @@ class BusLocationViewSet(viewsets.ModelViewSet):
 class BusScheduleViewSet(viewsets.ModelViewSet):
     queryset = BusSchedule.objects.all()
     serializer_class = BusScheduleSerializer
+
+
+class UserGroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = UserGroupSerializer
