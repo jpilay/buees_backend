@@ -26,8 +26,9 @@ admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'BusPlate', BusPlateViewSet)
 router.register(r'BusRoute', BusRouteViewSet)
-#router.register(r'BusLocation', BusLocationViewSet)
+router.register(r'BusLocation', BusLocationViewSet)
 router.register(r'BusSchedule', BusScheduleViewSet)
+router.register(r'DriverPublication', DriverPublicationViewSet)
 router.register(r'UserGroup', UserGroupViewSet)
 
 urlpatterns = [
@@ -37,6 +38,7 @@ urlpatterns = [
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^bus_location/', bus_location, name='bus_location'),
     url(r'^recovery_password/', recovery_password, name='recovery_password'),
+    url(r'^register_device/', register_device, name='register_device'),
     url(r'^signin/', signin, name='signin'),
     url(r'^signup/', signup, name='signup'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
