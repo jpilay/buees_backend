@@ -1,17 +1,15 @@
 from backend.models import *
-from rest_framework import serializers
+from rest_framework import serializers, generics
 
 
 class BusPlateSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusPlate
-        fields = ('name','date')
 
 
 class BusRouteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BusPlate
-        fields = ('name','date')
+        model = BusRoute
 
 
 class BusLocationSerializer(serializers.ModelSerializer):
@@ -24,6 +22,14 @@ class BusScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusSchedule
         fields = ('image',)
+
+
+class DriverPublicationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        #depth = 1
+        model = DriverPublication
+        fields = ('id', 'bus_route', 'date', 'description', 'hour', 'image', 'status')
 
 
 class UserGroupSerializer(serializers.ModelSerializer):
