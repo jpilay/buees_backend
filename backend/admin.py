@@ -1,5 +1,6 @@
 from django.contrib import admin
 from backend.models import *
+from push_notifications.models import APNSDevice
 
 class BusScheduleAdmin(admin.ModelAdmin):
   list_display = ['id', 'image']
@@ -13,9 +14,10 @@ class BusScheduleAdmin(admin.ModelAdmin):
 
 
 class DriverPublicationAdmin(admin.ModelAdmin):
-  list_display = ['description', 'hour', 'date', 'image', 'status']
+  list_display = ['bus_route', 'description', 'hour', 'date', 'image', 'status']
 
 
+admin.site.unregister(APNSDevice)
 admin.site.register(BusPlate)
 admin.site.register(BusRoute)
 admin.site.register(BusLocation)
