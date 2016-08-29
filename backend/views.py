@@ -9,11 +9,13 @@ from push_notifications.models import GCMDevice
 from .models import *
 import json
 
+
 # Map
 def index(request):
     routes = BusRoute.objects.all()
     context = {'routes':routes,}
     return render(request, 'map.html', context)
+
 
 # View looking the last location of bus
 @never_cache
@@ -21,7 +23,7 @@ def bus_location(request):
     response = {}
 
     try:
-    	bus_route_name = request.GET['bus_route'].strip()
+    	  bus_route_name = request.GET['bus_route'].strip()
     except:
         return HttpResponseBadRequest('Error en parametros')
 
@@ -34,17 +36,24 @@ def bus_location(request):
 
     return HttpResponse(json.dumps(response))
 
+
+# Generate new password
+def generate_password():
+    import random,string
+    new_pwd = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(5))
+    return new_pwd
+
+
 # Save information device for Notification Push
 @csrf_exempt
 def register_device(request):
 
     response = {}
     username = request.POST.get('username',None)
-    name = request.POST.get('name',None)
     device_id = request.POST.get('device_id',None)
     registration_id = request.POST.get('registration_id',None)
 
-    if user_id and name and device_id and registration_id:
+    if user_id and device_id and registration_id:
         gcm_device = GCMDevice.objects.filter(device_id=device_id)
 
         if gcm_device:
@@ -52,7 +61,7 @@ def register_device(request):
 
         else:
             user = User.objects.get(username=username)
-            gcm_device = GCMDevice.objects.create(user=user,name=name,device_id=device_id,registration_id=registration_id)
+            gcm_device = GCMDevice.objects.create(user=user,name=username,device_id=device_id,registration_id=registration_id)
             gcm_device.save()
 
         response = {'id':gcm_device.id,}
@@ -67,10 +76,14 @@ def recovery_password(request):
     username = request.POST.get('username', None)
     new_password = request.POST.get('password', None)
 
-    if username and new_password:
+    if username:
         user = User.objects.filter(username=username)
 
         if user:
+
+            if not new_password:
+                new_password = generate_password()
+
             user = user.first()
             user.set_password(new_password)
             user.save()
@@ -90,12 +103,12 @@ def recovery_password(request):
 
             response = {'username':user.username, 'email':user.email, 'group':group.name}
 
-    return JsonResponse(context)
+    return JsonResponse(response)
 
 
 # Email message for recovery password of user
 def recovery_password_email(username,password):
-    body = '<table align="center"><thead><tr><td style="background-color:#ffffff;padding-left:20px"><img style="width: 164px; height: 42px;"  alt="icono"  src="http://www.uees.edu.ec/images/logo-uees.jpg"></td></tr></thead><tbody><tr><td style="padding:20px"><div  style="text-align: left;"><br>Hola ' + username + '!<br><br>Has solicitado restablecer la contrase&ntilde;a de tu cuenta de Buees,<br><br><span style="font-weight: bold;">Contrase&ntilde;a: </span>' + password + '<br><br>En caso que desees cambiar la contrase&ntilde;a, puedes ir al bot&oacute;n de cambiar contrase&ntilde;a que <br>se encuentra en la opci&oacute;n de registrar.<br><br><br>Gracias,<br>El equipo de Buues<br><br></div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
+    body = '<table align="center"><thead><tr><td style="background-color:#ffffff;padding-left:20px"><img style="width: 164px; height: 42px;"  alt="icono"  src="http://www.uees.edu.ec/images/logo-uees.jpg"></td></tr></thead><tbody><tr><td style="padding:20px"><div  style="text-align: left;"><br>Hola ' + username + '!<br><br>Has solicitado restablecer la contrase&ntilde;a de tu cuenta de Buees,<br><br><span style="font-weight: bold;">Contrase&ntilde;a: </span>' + password + '<br><br>En caso que desees cambiar la contrase&ntilde;a, puedes ir al bot&oacute;n de cambiar contrase&ntilde;a que <br>se encuentra en ajustes del menu principal.<br><br><br>Gracias,<br>El equipo de Buues<br><br></div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
 
     return body
 
@@ -111,11 +124,17 @@ def signin(request):
         user = authenticate(username=username, password=password)
 
         if user:
+            registration_id = ''
             group = Group.objects.filter(user=user)
+            gcm_device = GCMDevice.objects.filter(user=user.id)
+
+            if gcm_device:
+                gcm_device = gcm_device.firts()
+                registration_id = gcm_device.registration_id
 
             if group:
                 group = group.first()
-                response = {'username':user.username, 'email':user.email, 'group':group.name}
+                response = {'username':user.username, 'email':user.email, 'group':group.name, 'registration_id':registration_id}
 
     return JsonResponse(response)
 
