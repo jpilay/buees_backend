@@ -22,6 +22,11 @@ class BusScheduleViewSet(viewsets.ModelViewSet):
     serializer_class = BusScheduleSerializer
 
 
+class DriverPublicationViewSet(viewsets.ModelViewSet):
+    queryset = DriverPublication.objects.filter(status=False)
+    serializer_class = DriverPublicationSerializer
+
+
 class UserGroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = UserGroupSerializer
