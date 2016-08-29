@@ -1,0 +1,8 @@
+configparser==3.5.0
+Django==1.8.14
+django-push-notifications==1.4.1
+djangorestframework==3.4.3
+mod-wsgi==4.5.3
+Pillow==3.4.0.dev0
+PyMySQL==0.7.6
+simplejson==3.8.2
