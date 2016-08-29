@@ -73,6 +73,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'buees.wsgi.application'
 
+# API
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10,
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+            'rest_framework.serializers.HyperlinkedModelSerializer',
+}
+
 # Push Notifications
 PUSH_NOTIFICATIONS_SETTINGS = {
    'GCM_API_KEY': 'AIzaSyD8pSQvFLk5TXx7-8nM7PXpM__hzN7RR_Y',
@@ -89,14 +96,24 @@ EMAIL_HOST_PASSWORD = 'buees2015'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'buees',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
