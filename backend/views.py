@@ -66,7 +66,7 @@ def register_device(request):
 
         response = {'id':gcm_device.id,}
 
-    return JsonResponde(response)
+    return JsonResponse(response)
 
 
 # Change password of user
