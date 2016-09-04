@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from push_notifications.models import GCMDevice
+from .validators import *
 import smtplib
 import datetime
+import json
 
 
 class BusPlate(models.Model):
@@ -20,6 +23,8 @@ class BusPlate(models.Model):
 class BusRoute(models.Model):
     name = models.CharField(max_length=45, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+    toUees = models.FileField(upload_to='routes',blank=False,validators=[validate_file_extension],help_text='Parada Base-Uees en formato "json".')
+    toBase = models.FileField(upload_to='routes',blank=False,validators=[validate_file_extension],help_text='Parada Uees-Base en formato "json".')
 
     def __str__(self):
         return self.name
@@ -71,3 +76,29 @@ class DriverPublication(models.Model):
         db_table = 'driver_publication'
         verbose_name = 'Publicación de Conductor'
         verbose_name_plural = 'Publicaciones de Conductores'
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, related_name='UserProfile')
+    phone = models.CharField(validators=[validate_phone_format],max_length=10,blank=False,help_text='Ingrese un número de teléfono solo cuando el usuario pertenesca al grupo Coordinador(a).')
+
+    def save(self, *args, **kwargs):
+        try:
+            group_name = 'coordinador'
+            if(self.user.groups.filter(name__icontains=group_name)):
+                print('isCoordinator')
+                from django.db.models import Q
+                users = User.objects.filter(~Q(groups__name__icontains=group_name))
+                devices = GCMDevice.objects.filter(user__in=users)
+                devices.send_message(json.dumps({'action':'coordinator',}))
+        except Exception as e:
+            print('***Error send push***')
+            print(e)
+
+        super(UserProfile,self).save(*args, **kwargs)
+
+    class Meta:
+        db_table = 'auth_user_profile'
+
+
+#User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
