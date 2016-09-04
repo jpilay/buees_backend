@@ -57,7 +57,7 @@ def register_device(request):
         gcm_device = GCMDevice.objects.filter(device_id=device_id)
 
         if gcm_device:
-            gcm_device = gcm_device.firts()
+            gcm_device = gcm_device[0]
 
         else:
             user = User.objects.get(username=username)
