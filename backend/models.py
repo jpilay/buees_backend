@@ -55,7 +55,7 @@ class BusLocation(models.Model):
 
 
 class BusSchedule(models.Model):
-    image = models.ImageField(upload_to='HorarioBuses')
+    image = models.ImageField(upload_to='schedule')
 
     class Meta:
         db_table = 'bus_schedule'
@@ -69,7 +69,7 @@ class DriverPublication(models.Model):
     date = models.DateField(blank=False)
     description = models.TextField(blank=False)
     hour = models.TimeField(blank=False)
-    image = models.ImageField(upload_to='Publications')
+    image = models.ImageField(upload_to='publications')
     status = models.BooleanField(default=False,blank=False)
 
     def save(self, *args, **kwargs):
