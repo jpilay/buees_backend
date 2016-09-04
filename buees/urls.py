@@ -28,6 +28,7 @@ router.register(r'BusPlate', BusPlateViewSet)
 router.register(r'BusRoute', BusRouteViewSet)
 router.register(r'BusLocation', BusLocationViewSet)
 router.register(r'BusSchedule', BusScheduleViewSet)
+router.register(r'Coordinator', CoordinatorViewSet)
 router.register(r'DriverPublication', DriverPublicationViewSet)
 router.register(r'UserGroup', UserGroupViewSet)
 
