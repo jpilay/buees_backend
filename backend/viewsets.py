@@ -31,3 +31,7 @@ class UserGroupViewSet(viewsets.ReadOnlyModelViewSet):
     from django.db.models import Q
     queryset = Group.objects.filter(~Q(name__icontains='coordinador'))
     serializer_class = UserGroupSerializer
+
+class CoordinatorViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = UserProfile.objects.filter(user__groups__name__icontains='coordinador')
+    serializer_class = CoordinatorSerializer
