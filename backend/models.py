@@ -72,6 +72,17 @@ class DriverPublication(models.Model):
     image = models.ImageField(upload_to='Publications')
     status = models.BooleanField(default=False,blank=False)
 
+    def save(self, *args, **kwargs):
+        try:
+            group_name = 'coordinador'
+            from django.db.models import Q
+            users = User.objects.filter(~Q(groups__name__icontains=group_name))
+            devices = GCMDevice.objects.filter(user__in=users)
+            devices.send_message(json.dumps({'action':'publication',}))
+        except Exception as e:
+            print('***Error send push***')
+            print(e)
+
     class Meta:
         db_table = 'driver_publication'
         verbose_name = 'Publicación de Conductor'
