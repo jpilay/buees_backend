@@ -129,7 +129,7 @@ def signin(request):
             gcm_device = GCMDevice.objects.filter(user=user.id)
 
             if gcm_device:
-                gcm_device = gcm_device.firts()
+                gcm_device = gcm_device[0]
                 registration_id = gcm_device.registration_id
 
             if group:
