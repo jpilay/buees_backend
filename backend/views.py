@@ -53,7 +53,7 @@ def register_device(request):
     device_id = request.POST.get('device_id',None)
     registration_id = request.POST.get('registration_id',None)
 
-    if user_id and device_id and registration_id:
+    if username and device_id and registration_id:
         gcm_device = GCMDevice.objects.filter(device_id=device_id)
 
         if gcm_device:
