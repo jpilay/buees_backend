@@ -83,6 +83,8 @@ class DriverPublication(models.Model):
             print('***Error send push***')
             print(e)
 
+        super(DriverPublication,self).save(*args, **kwargs)
+
     class Meta:
         db_table = 'driver_publication'
         verbose_name = 'Publicación de Conductor'
