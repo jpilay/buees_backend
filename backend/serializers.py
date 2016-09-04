@@ -25,7 +25,6 @@ class BusScheduleSerializer(serializers.ModelSerializer):
 
 
 class DriverPublicationSerializer(serializers.ModelSerializer):
-
     class Meta:
         #depth = 1
         model = DriverPublication
@@ -36,3 +35,9 @@ class UserGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('name',)
+
+class CoordinatorSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username")
+    class Meta:
+        model = UserProfile
+        fields = ('username', 'phone')
