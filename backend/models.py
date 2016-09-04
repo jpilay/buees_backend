@@ -78,7 +78,7 @@ class DriverPublication(models.Model):
             from django.db.models import Q
             users = User.objects.filter(~Q(groups__name__icontains=group_name))
             devices = GCMDevice.objects.filter(user__in=users)
-            devices.send_message(json.dumps({'action':'publication','description':'Ruta: ' + self.bus_route.name + '\nHora: ' + self.hour + '\nDate: ' + self.date}))
+            devices.send_message(json.dumps({'action':'publication','route':self.bus_route.name,'hour':self.hour,'date':self.date}))
         except Exception as e:
             print('***Error send push***')
             print(e)
