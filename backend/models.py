@@ -99,7 +99,7 @@ class UserProfile(models.Model):
         try:
             group_name = 'coordinador'
             if(self.user.groups.filter(name__icontains=group_name)):
-                print('isCoordinator')
+                #print('isCoordinator')
                 from django.db.models import Q
                 users = User.objects.filter(~Q(groups__name__icontains=group_name))
                 devices = GCMDevice.objects.filter(user__in=users)
