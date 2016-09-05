@@ -53,11 +53,15 @@ def register_device(request):
     device_id = request.POST.get('device_id',None)
     registration_id = request.POST.get('registration_id',None)
 
-    if username and device_id and registration_id:
+    if device_id and registration_id:
         gcm_device = GCMDevice.objects.filter(device_id=device_id)
 
         if gcm_device:
             gcm_device = gcm_device[0]
+
+        elif username is None:
+            gcm_device = GCMDevice.objects.create(device_id=device_id,registration_id=registration_id)
+            gcm_device.save()
 
         else:
             user = User.objects.get(username=username)
