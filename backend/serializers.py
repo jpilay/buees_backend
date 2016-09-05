@@ -28,7 +28,7 @@ class DriverPublicationSerializer(serializers.ModelSerializer):
     class Meta:
         #depth = 1
         model = DriverPublication
-        fields = ('id', 'bus_route', 'date', 'description', 'hour', 'image', 'status')
+        fields = ('id', 'bus_route', 'date', 'description', 'hour', 'image')
 
 
 class UserGroupSerializer(serializers.ModelSerializer):
