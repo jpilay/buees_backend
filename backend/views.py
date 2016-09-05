@@ -58,6 +58,9 @@ def register_device(request):
 
         if gcm_device:
             gcm_device = gcm_device[0]
+            if gcm_device.registration_id != registration_id:
+                gcm_device.registration_id = registration_id
+                gcm_device.save()
 
         elif username is None:
             gcm_device = GCMDevice.objects.create(device_id=device_id,registration_id=registration_id)
