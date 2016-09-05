@@ -70,7 +70,7 @@ class DriverPublication(models.Model):
     description = models.TextField(blank=False)
     hour = models.TimeField(blank=False)
     image = models.ImageField(upload_to='publications')
-    status = models.BooleanField(default=False,blank=False)
+    status = models.BooleanField(default=False,blank=True)
 
     def save(self, *args, **kwargs):
         try:
