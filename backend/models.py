@@ -98,12 +98,8 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         try:
             group_name = 'coordinador'
-            if(self.user.groups.filter(name__icontains=group_name)):
-                #print('isCoordinator')
-                from django.db.models import Q
-                users = User.objects.filter(~Q(groups__name__icontains=group_name))
-                devices = GCMDevice.objects.filter(user__in=users)
-                devices.send_message(json.dumps({'action':'coordinator',}))
+            devices = GCMDevice.objects.filter(user__isnull=True)
+            devices.send_message(json.dumps({'action':'coordinator',}))
         except Exception as e:
             print('***Error send push***')
             print(e)
