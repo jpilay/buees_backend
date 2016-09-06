@@ -74,11 +74,12 @@ class DriverPublication(models.Model):
 
     def save(self, *args, **kwargs):
         try:
-            group_name = 'coordinador'
-            from django.db.models import Q
-            users = User.objects.filter(~Q(groups__name__icontains=group_name))
-            devices = GCMDevice.objects.filter(user__in=users)
-            devices.send_message(json.dumps({'action':'publication','route':self.bus_route.name,'hour':self.hour,'date':self.date}))
+            if not self.status:
+                group_name = 'coordinador'
+                from django.db.models import Q
+                users = User.objects.filter(~Q(groups__name__icontains=group_name))
+                devices = GCMDevice.objects.filter(user__in=users)
+                devices.send_message(json.dumps({'action':'publication','route':self.bus_route.name,'hour':self.hour,'date':self.date}))
         except Exception as e:
             print('***Error send push***')
             print(e)
