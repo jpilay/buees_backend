@@ -36,12 +36,54 @@ def bus_location(request):
 
     return HttpResponse(json.dumps(response))
 
+# View for change status of objects delivery
+@csrf_exempt
+def delivery(request):
+    response = {}
+    username = request.POST.get('username', None)
+    password = request.POST.get('password', None)
+    publication_id = request.POST.get('publication_id', None)
+
+    if username and password and publication_id:
+        user = authenticate(username=username, password=password)
+
+        if user:
+
+            if user.groups.filter(name__icontains='coordinador'):
+                dp = DriverPublication.objects.get(id=publication_id)
+                dp.user_postman = user
+                dp.status = True
+                dp.save()
+
+                response = {'id':dp.id}
+
+    return JsonResponse(response)
+
+
 
 # Generate new password
 def generate_password():
     import random,string
     new_pwd = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(5))
     return new_pwd
+
+
+# Send notification to users from driver
+@csrf_exempt
+def notify(request):
+    response = {'result':False}
+    title = request.POST.get('title',None)
+    description = request.POST.get('description',None)
+
+    if title and description:
+        try:
+            devices = GCMDevice.objects.filter(user__isnull=False)
+            devices.send_message(json.dumps({'action':'notification','title':title,'description':description}))
+            response = {'result':True}
+        except Exception as e:
+            print('***Error send push***')
+            print(e)
+    return JsonResponse(response)
 
 
 # Save information device for Notification Push
