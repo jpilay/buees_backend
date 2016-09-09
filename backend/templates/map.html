@@ -26,6 +26,7 @@
 <!-- Custom JavaScript -->
 <script>
 
+  var routes = [];
   var markers = [];
   var bus_stops = [];
   var results = [];
@@ -62,9 +63,17 @@
     });
 
     {% for r in routes %}
-        options = '<input type="radio" name="options" id="options" value="{{r.name}}"/>{{r.name}}<br/>'
-        $('#result_search').append(options);
-        count++;
+      options = '<input type="radio" name="options" id="options" value="' + count + '"/>{{r.name}}<br/>'
+      $('#result_search').append(options);
+
+      // Creating object route
+      var obj_route ={
+        'name': '{{r.name}}',
+        'toUees': '{{r.toUees.url}}',
+        'toBase': '{{r.toBase.url}}'
+      }
+      routes.push(obj_route);
+      count++;
     {% endfor %}
 
     $('#modal_search').modal('show');
@@ -105,12 +114,12 @@
   }
 
   // Marking Bus Stops on the map
-  function markerBusStops(route){
-    var tmp = route_selected.replace(/ /g,'');
-    var img = "{% static 'img/stop' %}"
-    var url = "{% static 'json/' %}";
+  function markerBusStops(url){
 
-    $.getJSON(url + route + tmp + '.json',
+    var tmp = routes[route_selected].name.replace(/ /g,'');
+    var img = "{% static 'img/stop' %}"
+
+    $.getJSON(url,
       function(dataBusStops) {
         quantityBusStops = dataBusStops.length;
         for (var i = 0; i < quantityBusStops; i++) {
@@ -120,7 +129,7 @@
           var address = dataBusStops[i].dir;
           var hour = dataBusStops[i].hour;
           var currentLocation = new google.maps.LatLng(latitude, longitude);
-          var title = stop + ': ' + address + '<br>' + 'Ruta: ' + route_selected;
+          var title = stop + ': ' + address + '<br>' + 'Ruta: ' + routes[route_selected].name;
           var marker = new google.maps.Marker({
             position: currentLocation,
             map: map,
@@ -145,7 +154,7 @@
     var tmp = []
     removeMarkers(markers);
 
-    $.getJSON("/bus_location/?bus_route=" + route_selected,
+    $.getJSON("/bus_location/?bus_route=" + routes[route_selected].name,
       function(result){
         if (!$.isEmptyObject(result)){
   	      var plate = result.plate;
@@ -182,15 +191,15 @@
   }
 
   // Marking way stops
-  function wayStops() {
+  function toBaseStops() {
       removeMarkers(bus_stops);
-      markerBusStops('ida');
+      markerBusStops(routes[route_selected].toBase);
   }
 
   // Marking return stops
-  function returnStops() {
+  function toUeesStops() {
       removeMarkers(bus_stops);
-      markerBusStops('regreso');
+      markerBusStops(routes[route_selected].toUees);
   }
 
   google.maps.event.addDomListener(window, 'load', initialize);
@@ -208,8 +217,8 @@
         <div style="color: white; font-size:15px; padding:10px 5px 5px 10px;">
           <span style="padding-left:10px;">VISOR DE BUSES EN TIEMPO REAL</span>
         </div>
-        <button id="ida" type='button' style="left:100;background-color:#3B0E15; color:white;top: 44px; font-size: 10px;" class='btn_ida btn-lg' onclick="wayStops()">Paradas Ida</button>
-        <button id="retorno" type='button' style="float: left;background-color:#3B0E15; color:white;top: 50px;font-size: 10px;" class='btn_retorno btn-lg' onclick="returnStops()">Paradas Retorno</button>
+        <button id="ida" type='button' style="left:100;background-color:#3B0E15; color:white;top: 44px; font-size: 10px;" class='btn_ida btn-lg' onclick="toBaseStops()">Paradas Uees-Base</button>
+        <button id="retorno" type='button' style="float: left;background-color:#3B0E15; color:white;top: 50px;font-size: 10px;" class='btn_retorno btn-lg' onclick="toUeesStops()">Paradas Base-Uees</button>
       </div>
     </div>
   </div>
