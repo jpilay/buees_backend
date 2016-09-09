@@ -23,7 +23,7 @@ def bus_location(request):
     response = {}
 
     try:
-    	  bus_route_name = request.GET['bus_route'].strip()
+        bus_route_name = request.GET['bus_route'].strip()
     except:
         return HttpResponseBadRequest('Error en parametros')
 
