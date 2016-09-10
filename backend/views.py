@@ -193,15 +193,18 @@ def signin(request):
 def signup(request):
     response = {}
     username = request.POST.get('username', None)
-    password = request.POST.get('password', None)
+    #password = request.POST.get('password', None)
     email = request.POST.get('email', None)
     group_name = request.POST.get('group_name', None)
 
-    if username and password and email:
+    #if username and password and email:
+    if username and email:
+
         user = User.objects.filter(username=username)
         group = Group.objects.filter(name=group_name)
 
         if not user and group:
+            password = generated_password()
             user = User.objects.create_user(username,email,password)
             group = group.first()
             user.groups.add(group)
