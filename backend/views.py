@@ -204,7 +204,7 @@ def signup(request):
         group = Group.objects.filter(name=group_name)
 
         if not user and group:
-            password = generated_password()
+            password = generate_password()
             user = User.objects.create_user(username,email,password)
             group = group.first()
             user.groups.add(group)
