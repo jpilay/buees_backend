@@ -214,7 +214,7 @@ def signup(request):
                     '',
                     settings.EMAIL_HOST_USER,
                     [user.email],
-                    html_message = signup_email(user.username)
+                    html_message = signup_email(user.username, password)
                     )
             except:
                 print(user.username + ': Don\'t send welcome email!')
@@ -225,7 +225,7 @@ def signup(request):
 
 
 # Email message for welcome of user
-def signup_email(username):
-    body = '<table align="center"><thead><tr><td style="background-color:#ffffff;padding-left:20px"><img  style="width: 164px; height: 42px;"  alt="icono"  src="http://www.uees.edu.ec/images/logo-uees.jpg"></td></tr></thead><tbody><tr><td  style="padding:20px"><div>Hola ' + username + '!<br><br>Hemos asegurado que tenemos correctamente tu correo electr&oacute;nico.<br><span  style="font-weight: bold;">Ahora podras acceder a la aplicaci&iacute;n y disfrutar de todas las opciones que tiene para t&iacute;.</div><br><br/>Gracias,<br>El equipo Buees</div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
+def signup_email(username, password):
+    body = '<table align="center"><thead><tr><td style="background-color:#ffffff;padding-left:20px"><img  style="width: 164px; height: 42px;"  alt="icono"  src="http://www.uees.edu.ec/images/logo-uees.jpg"></td></tr></thead><tbody><tr><td  style="padding:20px"><div>Hola ' + username + '!<br><br>Hemos asegurado que tenemos correctamente tu correo electr&oacute;nico.<br>Su contraseña es: ' + password + '<br><span  style="font-weight: bold;">Ahora podras acceder a la aplicaci&oacute;n y disfrutar de todas las opciones que tiene para t&iacute;.</div><br><br/>Gracias,<br>El equipo Buees</div></td></tr><tr><td style="background-color:#eeeeee;"></div></td></tr></tbody></table>'
 
     return body
